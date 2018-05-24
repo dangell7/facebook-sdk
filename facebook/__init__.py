@@ -268,6 +268,12 @@ class GraphAPI(object):
             raise GraphAPIError(response)
 
         headers = response.headers
+        if headers['x-page-usage']['call_count'] > 95 or headers['x-page-usage']['total_cputime'] > 95 or headers['x-page-usage']['total_time'] > 95:
+            error = {
+                'error_code': '999'
+                'error_description': 'API Page Usage is Greater than 95%; Usage: %s' % str(headers['x-page-usage'])
+            }
+            raise GraphAPIError(error)
         if 'json' in headers['content-type']:
             result = response.json()
         elif 'image/' in headers['content-type']:
@@ -288,7 +294,7 @@ class GraphAPI(object):
 
         if result and isinstance(result, dict) and result.get("error"):
             raise GraphAPIError(result)
-        return result, headers
+        return result
 
     def get_app_access_token(self, app_id, app_secret, offline=False):
         """
