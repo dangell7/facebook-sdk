@@ -268,6 +268,7 @@ class GraphAPI(object):
             raise GraphAPIError(response)
 
         headers = response.headers
+        print(headers)
         if 'json' in headers['content-type']:
             result = response.json()
         elif 'image/' in headers['content-type']:
@@ -288,7 +289,7 @@ class GraphAPI(object):
 
         if result and isinstance(result, dict) and result.get("error"):
             raise GraphAPIError(result)
-        return result, headers
+        return result
 
     def get_app_access_token(self, app_id, app_secret, offline=False):
         """
