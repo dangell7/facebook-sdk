@@ -288,7 +288,7 @@ class GraphAPI(object):
 
         if result and isinstance(result, dict) and result.get("error"):
             raise GraphAPIError(result)
-        return result
+        return result, headers
 
     def get_app_access_token(self, app_id, app_secret, offline=False):
         """
