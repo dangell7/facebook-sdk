@@ -268,14 +268,15 @@ class GraphAPI(object):
             raise GraphAPIError(response)
 
         headers = response.headers
-        page_usage = json.loads(str(headers['x-page-usage'])
-        if page_usage['call_count'] > 95 or page_usage['total_cputime'] > 95 or page_usage['total_time'] > 95:
+        page_usage = json.loads(str(headers['x-page-usage']))
+        print(page_usage)
+        if page_usage['call_count'] >= 95 or page_usage['total_cputime'] >= 95 or page_usage['total_time'] >= 95:
             error = {
                 'error_code': '999',
                 'error_description': 'API Page Usage is Greater than 95%; Usage: %s' % str(headers['x-page-usage']),
             }
             raise GraphAPIError(error)
-        if 'json' in headers['content-type']:
+        elif 'json' in headers['content-type']:
             result = response.json()
         elif 'image/' in headers['content-type']:
             mimetype = headers['content-type']
