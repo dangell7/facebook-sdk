@@ -269,7 +269,6 @@ class GraphAPI(object):
 
         headers = response.headers
         page_usage = json.loads(str(headers['x-page-usage'])
-        print(page_usage)
         if page_usage['call_count'] > 95 or page_usage['total_cputime'] > 95 or page_usage['total_time'] > 95:
             error = {
                 'error_code': '999',
