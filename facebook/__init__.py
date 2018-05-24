@@ -273,7 +273,7 @@ class GraphAPI(object):
         if page_usage['call_count'] >= 95 or page_usage['total_cputime'] >= 95 or page_usage['total_time'] >= 95:
             error = {
                 'error_code': '999',
-                'error_description': 'API Page Usage is Greater than 95%; Usage: %s' % str(headers['x-page-usage']),
+                'error_description': 'API Page Usage is Greater than 95 percent: %s' % page_usage),
             }
             raise GraphAPIError(error)
         elif 'json' in headers['content-type']:
